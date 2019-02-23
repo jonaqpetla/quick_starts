@@ -1,23 +1,30 @@
-Here are some of the basic commands for git
+Here are some of the basic commands and instructions for git
 
 1. git clone <url>
 creates a copy of the repo
 2. git fork <url>
 creates a copy of someone else's repo
-3. git add <filename> or git add * 
+3. git add <filename> or git add * or git add .
 adds file to staging area. git will include the changes in the next revision to the repo.
-4. git commit or git commit -m "commit message"
+git ttracks files, not folders. It will respect the folder structure though. Basically empty folders are not tracked.
+git add doesn't remove the files that have since been deleted, it only handles new and edited files. 
+3a. git add --all handles that.
+4. git rm --cached <filename>
+removes a file from staging area
+5. git commit or git commit -m "commit message"
 make a commit duh
-5. git diff
+6. git diff
 shows all the changes made that has yet not been committed
-6. git commit -am "message"
+7. git commit -am "message"
 adds and then commits in one go
-7. git status
+8. git status
 tells status of the whole repo
-8. git push or git push origin master
-sends commit changes to remote repository (in master branch in the second case)
-9. git pull
+9. git push or git push origin master
+sends commit changes to remote repository (master branch to remote repo named origin in the second case)
+for the first time you push, use git push -u origin master to track the changes to remote repo
+10. git pull <remote> <destination_branch>
 receives recent changes from remote repo
+11. git remote add origin <url>
 
 Merge Conflicts:
 line 1
@@ -45,5 +52,12 @@ switch to the branch
 create a branch and then switch to it 
 16. git merge <branch_name>
 merges that branch to current branch
+merging to master is usually not recommended, you may not like how they merged. merge master to this insted. safety
+17. git branch -d <branch_name> or git branch -D <branch_name> 
+delete a branch or delete a branch without merging
 
 Pull Requests
+
+Starting in your own system:
+17. git init or git init <repo_name>
+Initialises a/the repo in your working directory
