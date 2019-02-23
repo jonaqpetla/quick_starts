@@ -1,5 +1,7 @@
 Here are some of the basic commands and instructions for git
 
+0. git config to set username, email etc
+
 1. git clone <url>
 creates a copy of the repo
 2. git fork <url>
@@ -36,28 +38,28 @@ line 3                          <- remote changes
 line 4 ...
 manually resolve and commit again
 
-10. git log
+12. git log
 shows a log of all commits and messages
-11. git reset --hard <commit hash> or git commit --hard origin/master
+13. git reset --hard <commit hash> or git commit --hard origin/master
 reverts code back to the specified version
 
 Branching:
-12. git branch
+14. git branch
 shows all branches
-13. git branch <new_branch_name>
+15. git branch <new_branch_name>
 create a new branch
-14. git checkout <branch_name>
+16. git checkout <branch_name>
 switch to the branch
-15. git checkout -b <new_branch_name>
+17. git checkout -b <new_branch_name>
 create a branch and then switch to it 
-16. git merge <branch_name>
+18. git merge <branch_name>
 merges that branch to current branch
 merging to master is usually not recommended, you may not like how they merged. merge master to this insted. safety
-17. git branch -d <branch_name> or git branch -D <branch_name> 
+19. git branch -d <branch_name> or git branch -D <branch_name> 
 delete a branch or delete a branch without merging
 
 Pull Requests
 
 Starting in your own system:
-17. git init or git init <repo_name>
+20. git init or git init <repo_name>
 Initialises a/the repo in your working directory
