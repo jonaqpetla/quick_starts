@@ -11,8 +11,8 @@ adds file to staging area. git will include the changes in the next revision to 
 git ttracks files, not folders. It will respect the folder structure though. Basically empty folders are not tracked.
 git add doesn't remove the files that have since been deleted, it only handles new and edited files. 
 3a. git add --all handles that.
-4. git rm --cached <filename>
-removes a file from staging area
+4. git rm --cached <filename> or git rm --cached -r <directoryname>
+removes a file or folder from staging area
 5. git commit or git commit -m "commit message"
 make a commit duh
 6. git diff
