@@ -1,0 +1,46 @@
+gdb works on executables, that's  our .out files.
+in case of g++, compile using the -g flag.
+e.g. g++ -g hello.cpp
+
+fire up gdb using gdb ./a.out
+
+>> break <function_name> or break <file_name>:<line_number>
+shortened b
+set a breakpoint
+
+>> list or list <line number>
+lists the lines around  current line number
+shortened l
+
+>> clear <function_name> or clear <file_name>:<line_number>
+shortened cl
+clears any breakpoints if set there
+
+>> disable
+disables all breakpoints
+
+>> run to start running
+
+>> next or n
+runs the next line: step over
+
+>> step or s
+step in
+
+>> print <variable_name>
+shortened p
+prints the specified variable, or prints everything
+
+>> print <variable_name> = <assign_value>
+to hack in and assign a value to the variable mid execution
+
+>> info locals
+prints all of the local variables
+
+>> quit or q to quit gdb
+
+>> continue or c to continue till the next breakpoint
+
+you can run make from inside gdb. you hot fix a code using value assignments,
+go fix your code in another editor/terminal, run make again and run and check :P
+
