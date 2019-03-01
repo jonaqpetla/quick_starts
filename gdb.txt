@@ -37,9 +37,15 @@ to hack in and assign a value to the variable mid execution
 >> info locals
 prints all of the local variables
 
+>> info b
+prints all of the breakpoints
+
 >> quit or q to quit gdb
 
 >> continue or c to continue till the next breakpoint
+
+>> backtrace traces the current funtion call to main()
+shortened bt
 
 you can run make from inside gdb. you hot fix a code using value assignments,
 go fix your code in another editor/terminal, run make again and run and check :P
