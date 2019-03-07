@@ -1,0 +1,80 @@
+// Quick revision collection for C++ STL
+
+>> for_each
+
+>> make_heap
+
+>> push_heap
+
+>> pop_heap
+
+>> sort, partial_sort
+
+>> inplace_merge
+
+>> rotate
+
+>> shuffle
+
+>> next_permutation
+
+>> prev_permutation
+
+>> reverse
+
+>> stable_<anything>, e.g. stable_partition
+
+>> is_<anything>, e.g. is_sorted
+
+>> is_<anything>_until, e.g. is_sorted_until
+
+>> count 
+
+>> accumulate
+
+>> partial_sum 
+
+>> inner_product
+
+>> adjacent_difference
+
+>> sample
+
+>> all_of, any_of, none_of
+
+>> equal
+
+>> is_permutation
+
+>> lexicographical_compare
+
+>> mismatch
+
+>> find (for non sorted)
+
+>> equal_range (for sorted collection)
+
+>> lower_bound, upper_bound
+
+>> binary_serch
+only tells if the value is present i.e.  a bool. Doesn't tell where it found it.
+
+>> max_element, min_element, maxmin_element
+maxmin returns a pair of iterators
+
+>> set_difference
+
+>> set_union, set_intersection, set_symmetric_difference, includes
+
+>> copy, move, copy_backwards, move_backwards
+
+>> fill, generate, iota, replace
+
+>> remove
+
+>> unique
+removes adjacent copies
+
+>> transform
+
+>> <anything>_n 
