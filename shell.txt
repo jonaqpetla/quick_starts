@@ -1,0 +1,126 @@
+#! /bin/bash
+which bash
+echo "Hello World! Bash shell is a dialect of bourne shell."
+Name="Jonaq"
+echo "My name is $NAME"
+read -p "Enter your name: " NAME
+echo "Hello $NAME, nice to meet you!"
+
+# The spaces after brackets are required. 
+if [ "$NAME"=="Jonaq" ]
+then
+	echo "Hello fatso!"
+elif [ "$NAME"=="Niyor" ]
+then
+	echo "Hello baldie!"
+else
+	echo "Hello handsome!"
+fi
+
+# no spaces if you don't want bash to complain
+NUM1=4
+NUM2=3
+if [ "$NUM1" -gt "$NUM2" ]
+then
+	echo "NUM1 is greater"
+fi
+
+# name of the script file
+echo "Name of the script file is: $0 and the processid is $$"
+
+FILE="test.txt"
+readonly FILE
+if [ -f "$FILE" ]
+then
+	echo "$FILE is a file"
+else
+	echo "$FILE is not a file"
+fi
+# unset $FILE
+# -f for file, -e for exists
+
+read -p "Are you an adult? Y/N: " ANSWER
+# Weird syntax coming through...
+case "$ANSWER" in
+	[yY] | [yY][eE][sS])
+		echo "Go and vote"
+		;;
+	[nN] | [nN][oO])
+		echo "Sorry, you can't vote"
+		;;
+	*)
+		echo "Say yes or no pls"
+		;;
+	esac
+
+# for loop
+# for/while/until do done, break, continue. nesting.
+NAMES="Brad Kevin Alice Mark"
+for NAME in $NAMES
+do
+	echo "Hello $NAME"
+done
+
+FILES=$(ls *.txt)
+for FILE in $FILES
+do
+	echo "Found a file named: $FILE"
+done
+
+# while loop to read a file line by line
+LINE=1
+while read -r CURRENT_LINE
+do
+	echo "$LINE: $CURRENT_LINE"
+	((LINE++))
+done < "./filename.txt"
+
+# functions, positional parameters
+function sayHello()
+{
+	echo "Hello $1"
+}
+
+sayHello "Happy person"
+
+echo "Appended some info to some text file lol."
+echo "This file was created by the shell script inside HPC Tutorials folder." >> "/mnt/c/Users/jonaq/Desktop/test.txt"
+
+# A terminal tutorial from here on out
+# ls and flags, -l, -a. mkdir, cd, cp, mv, rm. -r for directory. 
+# ~ means home, $ means regular privileges
+# pwd means present working directory
+# press TAB key to autocomplete your command, TAB twice to see all options
+# pushd <directory> to work in another directory, popd to return: in case you don't want to deal with long paths
+# linux doesn't really need the extensions. file <filename> for more info on the file.
+# locate <filename> or locate <parts of filename> to find. update the search database using sudo updatedb
+# which <command> to find a command
+# up arrow to go through your history of commands. use history command to list the last 1000 unique commands. then call that command using the number as in !<nu> eg. !12
+# whatis <command> for a short description. apropos <keyword> to find a command candidate. man for manual on a command.
+# touch <filename> to create an empty file, or update the last modified date
+# * is the wildcard string
+# rmdir only removes empty directories
+# cat <filename> to just list the text file. cat >> <filename> to append info into files. cat > to overwrite. also, cat file1 file2 concatenates file1 to file2
+# more to page through. less to read through, easier. q to quit from both.
+# piping command example (redirection): history | less
+# sudo -s to keep running as the root
+# su - <user> to become <user> and go to his directory and settings and stuff. su <user> without - will make me <user> but won't change working directory or settings
+# users command to see who is logged in
+# file permissions: read, write, execute. rwx for user, group, everyone. chmod to change mode. eg, chmode +X <filename> to make the file executable. or use chmod 700 <filename> to give me all permissions and nobody else gets anything. Directories need the execute bit set in order to be seen by others.
+# ctrl + c to stop a command.
+# killall <application> to kill all processes for the app
+# ctrl + D to say, I'm done with all input, and close the terminal. 
+# mail from shell, links browser
+
+# scripting:
+# variable types: local, environment, shell variables.
+# scalar variable
+# operators specific to bash shell: works inside square braces
+# Arithmetic: + - \* / % = == !=
+# Relational: -eq -ne -gt -lt -ge -le
+# Boolean: ! -o -a
+# String: = != -z -n str
+# File test: -d -e -f -p -t -u -r -w -x -s 
+
+# saying exit inside a funtion quits the script as well. use return to come out of a function and not the script.
+
