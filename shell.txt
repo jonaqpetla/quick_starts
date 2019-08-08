@@ -95,7 +95,7 @@ echo "This file was created by the shell script inside HPC Tutorials folder." >>
 # linux doesn't really need the extensions. file <filename> for more info on the file.
 # locate <filename> or locate <parts of filename> to find. update the search database using sudo updatedb
 # which <command> to find a command
-# up arrow to go through your history of commands. use history command to list the last 1000 unique commands. then call that command using the number as in !<nu> eg. !12
+# up arrow to go through your history of commands. use history command to list the last 1000 unique commands. then call that command using the number as in !<nu> eg. !12. Default location for history is ~/.bash_history. history -c to clear the history of the current shell.
 # whatis <command> for a short description. apropos <keyword> to find a command candidate. man for manual on a command.
 # touch <filename> to create an empty file, or update the last modified date
 # * is the wildcard string
@@ -110,7 +110,10 @@ echo "This file was created by the shell script inside HPC Tutorials folder." >>
 # ctrl + c to stop a command.
 # killall <application> to kill all processes for the app
 # ctrl + D to say, I'm done with all input, and close the terminal. 
-# mail from shell, links browser
+# mail from shell (needs some config, uses mailutils package), links browser
+# Aptitude is the default package manager. apt-cache search program (or *programName*) to see what is available in apt. apt-cache policy <app name> to see if your istalled version is the latest version. Install a .deb file by using sudo dpkg -i <filename>
+# grep to find text in all files in current directory. -i to ignore case, -n to include line numbers as well. grep -flags "string" ./*
+# crontabs to schedule task, eg. upgrade your softwares every Sunday at 5 am etc.
 
 # scripting:
 # variable types: local, environment, shell variables.
