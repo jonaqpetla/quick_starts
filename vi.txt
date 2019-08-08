@@ -1,17 +1,29 @@
 >> vi filename.txt
 to enter a file and land on command mode
+>> vi -p file1.txt file2.txt
+to open two files in tabbed mode. use :tabn to go to the next tab.
 >> i for insert
 >> esc to exit insert mode into command mode
+
 >> dd in command mode to delete a line
 >> . to repeat the last command
 >> 3dd to do dd 3 times. . after that will delete 3 more lines.
 >> x to delete characters one at a time
+
 >> A to append at the end of a line
 >> 0 to get to the beginning of a line, $ to get to the end of a line in command mode.
+
 >> /word_you_are_looking_for, n to  find the next match. in command mode. N for previous match
 >> :%s/what_to_replace/replace_with
+
+>> v to start selecting.
+>> y (yank) to copy the selected text, d(delete) to cut the selected text
+>> p to paste the copied/cut text
 >> u to undo the last command. ctrl+r to undo further
+>> V to select whole lines instead of characters
+
 >> 30G to go to the 30th line
+
 >> :q! quit without saving
 >> :x quit after saving
 >> :wq write and quit. same as x
