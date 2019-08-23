@@ -2,8 +2,8 @@ Here are some of the basic commands and instructions for git
 
 >> git config to set username, email etc
 
->> git clone <url>
-creates a copy of the repo
+>> git clone <url> or git clone <url> new_name
+creates a copy of the repo, rename if you want
 >> git fork <url>
 creates a copy of someone else's repo
 >> git add <filename> or git add * or git add .
@@ -28,40 +28,80 @@ for the first time you push, use git push -u origin master to track the changes 
 receives recent changes from remote repo
 >> git remote add origin <url>
 
-Merge Conflicts:
-line 1
-<<<<< HEAD
-line 2                          <- my changes
-=============
-line 3                          <- remote changes
->>>>>>>>> 019248WEIRDNUMBER     <- unique identifier
-line 4 ...
-manually resolve and commit again
-
 >> git log
 shows a log of all commits and messages
+git log --oneline to display in one line instead of 5, only initial characters of the sha and the commit message.
+git log --stat to display file insertions/deletions stat for the commits
+git log --patch or -p to display actual insertions/deletions in the files
+git log --decorate to display some additional info, e.g. tags
+>> git show <SHA>
+show log of given commit. the most recent commit in case no argument is given
+
+Undoing changes:
 >> git reset --hard <commit hash> or git commit --hard origin/master
-reverts code back to the specified version
+reverts code back to the specified version. This is to be treated as dangerous, because it deletes the commits newer than what you're checking out. Can still use git reflog to recover the deleted commits for 30 days or so. It is recommended that we use a backup branch before resetting the current branch.
+>> the flags: --soft --mixed --hard: from reset the most recent commit is erased, and we get the commit whose SHA we provided. --mixed (default) means our last commit will now be in working directory, --soft means they will be in staging area. --hard means our most recent commit has been deleted and the <commit hash> is the only commit we have.
+
+>> git commit --amend
+make changes to the last commit - include files, change commit message. Treat as a fresh  commit, but with the same name/SHA as the most recent one.
+>> git revert <SHA>
+reverts the changes made in the given commit, and makes a new commit.
 
 >> edit ./.git/.gitignore text file to list the files you don't want tracked. wildcards are allowed: can ignore whole folders this way.
+# marks the line a comment
+* is 0 or more character wildcard, ? is one character wildcard
+>> git tag -a <tag> 
+to tag the most recent commit, e.g. v1.0.1 etc. git tag -d <tag> to remove the tag.
+git tag -a <tag> <commit SHA> to tag older commits. Tag additions ask for a message in the editor.
 
 Branching:
 >> git branch
-shows all branches
->> git branch <new_branch_name>
-create a new branch
+shows all branches, asterisk in front of active branch
+>> git branch <new_branch_name> or git branch <new_branch> <old_commit_SHA>
+create a new branch same as current latest commit, or create a brach at the commit given
 >> git checkout <branch_name>
-switch to the branch
+switch to the branch, equivalently moves HEAD pointer to <branch_name> from Master (default branch)
 >> git checkout -b <new_branch_name>
 create a branch and then switch to it 
 >> git merge <branch_name>
 merges that branch to current branch
-merging to master is usually not recommended, you may not like how they merged. merge master to this insted. safety
+merging to master is usually not recommended, you may not like how they merged. merge master to this insted. for safety
 >> git branch -d <branch_name> or git branch -D <branch_name> 
-delete a branch or delete a branch without merging
+delete a branch or delete a branch without merging. d won't let you delete branches with unmerged commits.
+>> git log --oneline --decorate --graph --all
+one line per commit, (decorate) tell branch names, graph, all branches
 
-Pull Requests
+Merge Conflicts:
+line 1
+<<<<< HEAD
+line 2                          <- my changes
+||||| merged common ancestors
+line 3                          <- old lines
+=============
+line 4                          <- remote changes
+>>>>>>>>> 019248WEIRDNUMBER     <- unique identifier
+line 5 ...
+manually resolve and commit again. The merge was made, but the lines were modified to mark them as conflicted. No commit was made. The same file might have multiple mergeconflicts.
+
+Pull Requests:
+Are what made github so popular. Need to invest more time into it, but basically it is a way to merge my branch into your master. It can be treated as a merge request.
 
 Starting in your own system:
 >> git init or git init <repo_name>
 Initialises a/the repo in your working directory
+
+Udacity Class Notes:
+1. version control is like a snapshot of that board game
+git, mercurial, subversion are competitors
+git is distributed version control system: everyone has a full copy of the project
+centralized version control has one central PC that everything must pass through
+git-scm means git source code manager
+commit is the fundamental unit of git
+checkout is when content of a commit has been copied to working directory
+working directory -> staging area -> repository
+
+2. .git contents: config, description, hooks (scripts to hook into git's different lifecycle events), info, objects (stores the commits), refs (pointers to commits)
+
+3. git log uses less as the pager
+
+4. Relative commit references: HEAD^ is the parent commit, HEAD^^ is the grandparent etc. Use HEAD^2 to get to the other parent (similarly for grandparents) if this is the result of a merge and we have multiple parents. HEAD~2 is HEAD^^
