@@ -44,3 +44,4 @@ Advanced usage:
 >> :fold. mark a block using V, then :fold to mark them as foldable. :zo to ope that fold, :zc to close the fold
 >> ctrl+n for autocomplete of a word. Good for long variable names etc. ctrl+p to show a list of possible options
 >> ctrl+u/ctrl+d to move the cursor up/down by half a screen.
+>> :set spell to enable spell check, cuz y not 
