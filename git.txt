@@ -10,6 +10,8 @@ creates a copy of someone else's repo
 adds file to staging area. git will include the changes in the next revision to the repo.
 git ttracks files, not folders. It will respect the folder structure though. Basically empty folders are not tracked.
 git add doesn't remove the files that have since been deleted, it only handles new and edited files. 
+>> git add -p
+asks whether you want to stage individual edits. Parts of files can be staged this way. status will show the same file as staged and unstaged if stage parts of an edit. (Advanced use case, not common or essential.)
 >> git add --all handles that.
 >> git rm --cached <filename> or git rm --cached -r <directoryname>
 removes a file or folder from staging area

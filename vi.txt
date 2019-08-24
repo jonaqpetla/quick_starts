@@ -28,3 +28,11 @@ to open two files in tabbed mode. use :tabn to go to the next tab.
 >> :x quit after saving
 >> :wq write and quit. same as x
 >> ZZ to wq
+
+>> :set nu to show line numbers
+>> :set tabstop=4 to show \t as 4 spaces
+>> :set expandtab to replace \t with spaces
+>> :set shiftwidth=4 to make automatic indents as 4 spaces
+>> :set smartindednt or autoindednt to copy indentation from last line, smart indent indents after braces as well.
+>> to make these settings permanent, we need to edit .vimrc file (which may not exist if we haven't edited anything). 
+~/.vimrc (for current user) or ~/etc/vimrc(for all users). vim --version lists all of the locations. Editing the global vimrc will require sudo privileges.
