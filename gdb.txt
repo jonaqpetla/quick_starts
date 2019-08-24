@@ -1,8 +1,8 @@
 gdb works on executables, that's  our .out files.
 in case of g++, compile using the -g flag.
-e.g. g++ -g hello.cpp
+e.g. g++ -g hello.cpp or g++ -g hello.cpp -o executable
 
-fire up gdb using gdb ./a.out
+fire up gdb using gdb ./a.out or ./executable
 
 >> break <function_name> or break <file_name>:<line_number>
 shortened b
