@@ -38,6 +38,8 @@ git log --patch or -p to display actual insertions/deletions in the files
 git log --decorate to display some additional info, e.g. tags
 >> git show <SHA>
 show log of given commit. the most recent commit in case no argument is given
+>> git blame <filename>
+shows the last edits of each line of a file - commit, author, time. Looks ugly, rarely used. -s switch to suppress author and timestamps. git blame shows unstaged adits as well, with commit SHA as 0000..00.
 
 Undoing changes:
 >> git reset --hard <commit hash> or git commit --hard origin/master
@@ -86,7 +88,7 @@ line 5 ...
 manually resolve and commit again. The merge was made, but the lines were modified to mark them as conflicted. No commit was made. The same file might have multiple mergeconflicts.
 
 Pull Requests:
-Are what made github so popular. Need to invest more time into it, but basically it is a way to merge my branch into your master. It can be treated as a merge request.
+Are what made github so popular. Basically it is a way to merge my branch into your master. It can be treated as a merge request from one branch to the original owner of the repository. Github contributions work in this way - you fork the original source into your account, add the original repo as another remote in order to keep track of the progress, work on your copy to add feature/remove bug, pull once more from the original remote to see if there is coflicting progress, then submit a pull request so that the owner can pull your contributions in. You will be listed as a contributor to the original repo after the owner pulls in your changes. Check the Contributing.md file to find any guidelines the owners have set.
 
 Starting in your own system:
 >> git init or git init <repo_name>
