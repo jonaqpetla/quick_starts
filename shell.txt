@@ -127,3 +127,15 @@ echo "This file was created by the shell script inside HPC Tutorials folder." >>
 
 # saying exit inside a funtion quits the script as well. use return to come out of a function and not the script.
 
+# ffmpeg is a powerful audio/video/image converter application
+# usage is simple and straightforward, so it doesn't warrant a dedicated file
+# Basic usage:
+# ffmpeg -i <input filename> <output filename>
+# ffmpeg -i <input filename> -q 25 <output.avi> or -crf 25 <output.mp4> to specify quality of output. high value means low quality. 20-30 values are generally circuated in the web.
+# ffmpeg -i <input filename> -b:v 1000k -b:a 96k <output filename> to specify exact video and audio bitrates
+# Filters:
+# Audio volume (multiplier): ffmpef -i <input> -filter:a "volume=1.2" <output> to 1.2x the volume
+# Audio channel mapping (0 is left, 1 is right): ffmpeg <in> -filter:a "channelmap=0-0|0-1" <out> (mono to stereo)
+# Video crop: -filter:v "crop=w=640:h=480:x=100:y=200" 
+# Video scale: -filter:v "scale=w=640:h=480" or "scale=w=2/3*in_w:h=2/3*in_h" or "scale=w=852:h=-1" (h is auto)
+# Other video/picture filters: Sharpen, Contrast, Brightness, Saturation, gamma (for r/g/b/all), colourbalance
