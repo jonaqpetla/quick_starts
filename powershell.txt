@@ -1,0 +1,36 @@
+powershell uses a "verb-noun" command structure everywhere, with shortening in some places.
+returns are objects, with a print() implemented
+because this is windows, stuff is case insensitive
+wildcards work
+
+powershell supports plugins (modules). Run find-module -Tag <what you are looking for>
+vsCode has extensions for powershell development
+
+>> Basic Navigation:
+get-location (or gl) works like pwd
+set-location <path> (or sl <path>) works like cd, cd also works, as well as relative pathing
+move-item <item name> <directory> (or mi <> <>) to move
+new-item <item name> (or ni)
+remove-item <item name> (or ri
+
+>> Finding help
+get-command <name> to list all commands available. e.g. get-command * to list the universe
+get-help <command> to get help (run update-help before running it the first time)
+some commands even have a get-help <command> -example option
+
+>> Pipe
+pipe a returned object to get-member to look at the inaards and tyname, e.g. get-date | get-member
+pipe to format-list to get a list of all properties of the passed object
+get-process -Name chrome | stop-process to stop all processes with chrome in name
+
+>> Variables (powershell is not strongly typed)
+$PSitem (or simply $_) is the curent working object, get-variable to list all active variables
+e.g. 1,2,3 | foreach-object {$_} will  return 1 \n 2 \n 3
+e.g. get-process | where-object {$_.CPU -gt 100} to echo the processes with cpu property valued greater than 100
+e.g. $MY_VARIABLE = get-process, $MY_VARIABLE = 200 + 500
+e.g. [int]$VAR = '2' (string literal '2' gets cast to 2. unnecessary, just a demo)
+e.g. "" allows you to escape string definition and do math inside. $DEMO = "two plus two is $(2+2)" stores "...4"
+e.g. $VAR = read-host -Prompt 'Enter the directory to list: '
+        ls $VAR (read-host example use case)
+
+>> Logic
