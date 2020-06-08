@@ -1,44 +1,35 @@
 #! /bin/bash
+echo "bash shell is a dialect of bourne again shell"
 which bash
-echo "Hello World! Bash shell is a dialect of bourne shell."
-Name="Jonaq"
-echo "My name is $NAME"
-read -p "Enter your name: " NAME
-echo "Hello $NAME, nice to meet you!"
-
-# The spaces after brackets are required. 
-if [ "$NAME"=="Jonaq" ]
-then
-	echo "Hello fatso!"
-elif [ "$NAME"=="Niyor" ]
-then
-	echo "Hello baldie!"
-else
-	echo "Hello handsome!"
-fi
-
-# no spaces if you don't want bash to complain
-NUM1=4
-NUM2=3
-if [ "$NUM1" -gt "$NUM2" ]
-then
-	echo "NUM1 is greater"
-fi
-
 # name of the script file
 echo "Name of the script file is: $0 and the processid is $$"
 
-FILE="test.txt"
-readonly FILE
-if [ -f "$FILE" ]
-then
-	echo "$FILE is a file"
-else
-	echo "$FILE is not a file"
-fi
-# unset $FILE
-# -f for file, -e for exists
+# Variables, prompts ====================================
+NAME="Jonaq"
+echo "Hello, I'm $NAME"
+read -p "What's you name? " ANSWER
+echo "Nice to meet you, $ANSWER!"
 
+# If Else ===============================================
+# the space after [ is necessary, the space around == are necessary. the space before ] is necessary. Not intuitive
+if [ "$ANSWER" == "Jonaq" ]      
+    then
+    echo "You're formally a fatso!"
+elif [ "$ANSWER" == "Niyor" ]
+    then
+    echo "You're informally fatso!"
+else echo "You're a stranger!"
+fi
+
+# Comparing integers
+NUM1=4
+NUM2=3
+if [ $NUM1 -gt $NUM2 ]
+    then
+    echo "Bash says $NUM1 is greater than $NUM2"
+fi
+
+# Switch Case
 read -p "Are you an adult? Y/N: " ANSWER
 # Weird syntax coming through...
 case "$ANSWER" in
@@ -53,7 +44,18 @@ case "$ANSWER" in
 		;;
 	esac
 
-# for loop
+# File I/O ==============================================
+FILE="test.txt"
+# readonly FILE
+if [ -f "$FILE" ]
+then
+	echo "$FILE is a file in working directory"
+else
+	echo "$FILE is not a file in working directory"
+fi
+unset FILE # Can't unset a readonly variable
+
+# Loops =================================================
 # for/while/until do done, break, continue. nesting.
 NAMES="Brad Kevin Alice Mark"
 for NAME in $NAMES
@@ -73,20 +75,23 @@ while read -r CURRENT_LINE
 do
 	echo "$LINE: $CURRENT_LINE"
 	((LINE++))
-done < "./filename.txt"
+done < "$FILE"
 
-# functions, positional parameters
+
+# Functions, Positional parameters ======================
 function sayHello()
 {
-	echo "Hello $1"
+	echo "Hello from inside a function, $1"
 }
 
 sayHello "Happy person"
 
-echo "Appended some info to some text file lol."
-echo "This file was created by the shell script inside HPC Tutorials folder." >> "/mnt/c/Users/jonaq/Desktop/test.txt"
+echo "This file was created by the shell script quick_starts/shell.txt" >> "/mnt/c/Users/jonaq/Desktop/test.txt"
 
-# A terminal tutorial from here on out
+# #! usr/bin/py included inside a .py file will tell bash that that file has to be executed using python
+
+# ================= TERMINAL TUTORIAL ===================
+
 # ls and flags, -l, -a. mkdir, cd, cp, mv, rm. -r for directory. 
 # ~ means home, $ means regular privileges
 # pwd means present working directory
@@ -102,11 +107,20 @@ echo "This file was created by the shell script inside HPC Tutorials folder." >>
 # rmdir only removes empty directories
 # cat <filename> to just list the text file. cat >> <filename> to append info into files. cat > to overwrite. also, cat file1 file2 concatenates file1 to file2
 # more to page through. less to read through, easier. q to quit from both.
+
 # piping command example (redirection): history | less
+# executable < file to rewire the input of the program to this file
+# executable > file to rewire the output of the program to this file. > overwrites, >> appends.
+# e.g. executable.out < inputs.txt > outputs.txt 
+
 # sudo -s to keep running as the root
 # su - <user> to become <user> and go to his directory and settings and stuff. su <user> without - will make me <user> but won't change working directory or settings
 # users command to see who is logged in
-# file permissions: read, write, execute. rwx for user, group, everyone. chmod to change mode. eg, chmode +X <filename> to make the file executable. or use chmod 700 <filename> to give me all permissions and nobody else gets anything. Directories need the execute bit set in order to be seen by others.
+
+# file permissions: read, write, execute. rwx for user, group, everyone. 
+# chmod to change mode. eg, chmode +X <filename> to make the file executable. or use chmod 700 <filename> to give me all permissions and nobody else gets anything. 
+# Directories need the execute bit set in order to be seen by others (searchable), read to run ls -a, write to be able to rename, create or remove files from a directory. e.g. if you have w on a file inside a directory but not w on the directory, you can edit the file but can't delete it.
+
 # ctrl + c to stop a command.
 # killall <application> to kill all processes for the app
 # ctrl + D to say, I'm done with all input, and close the terminal. 
@@ -124,18 +138,3 @@ echo "This file was created by the shell script inside HPC Tutorials folder." >>
 # Boolean: ! -o -a
 # String: = != -z -n str
 # File test: -d -e -f -p -t -u -r -w -x -s 
-
-# saying exit inside a funtion quits the script as well. use return to come out of a function and not the script.
-
-# ffmpeg is a powerful audio/video/image converter application
-# usage is simple and straightforward, so it doesn't warrant a dedicated file
-# Basic usage:
-# ffmpeg -i <input filename> <output filename>
-# ffmpeg -i <input filename> -q 25 <output.avi> or -crf 25 <output.mp4> to specify quality of output. high value means low quality. 20-30 values are generally circuated in the web.
-# ffmpeg -i <input filename> -b:v 1000k -b:a 96k <output filename> to specify exact video and audio bitrates
-# Filters:
-# Audio volume (multiplier): ffmpef -i <input> -filter:a "volume=1.2" <output> to 1.2x the volume
-# Audio channel mapping (0 is left, 1 is right): ffmpeg <in> -filter:a "channelmap=0-0|0-1" <out> (mono to stereo)
-# Video crop: -filter:v "crop=w=640:h=480:x=100:y=200" 
-# Video scale: -filter:v "scale=w=640:h=480" or "scale=w=2/3*in_w:h=2/3*in_h" or "scale=w=852:h=-1" (h is auto)
-# Other video/picture filters: Sharpen, Contrast, Brightness, Saturation, gamma (for r/g/b/all), colourbalance
