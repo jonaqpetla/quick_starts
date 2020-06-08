@@ -5,6 +5,8 @@ wildcards work
 
 powershell supports plugins (modules). Run find-module -Tag <what you are looking for>
 vsCode has extensions for powershell development
+# for comment. <# for multiline comments #>
+save the script and run using ./<scriptname>.ps1, might have to Set-ExecutionPolicy before that
 
 >> Basic Navigation:
 get-location (or gl) works like pwd
@@ -34,3 +36,53 @@ e.g. $VAR = read-host -Prompt 'Enter the directory to list: '
         ls $VAR (read-host example use case)
 
 >> Logic
+
+$VAR = read-host -Prompt 'Enter 2'
+if($VAR -eq 2){
+    #perform action
+    write-host 'Screw you!'
+}
+elseif($VAR -eq 2){
+    #perform something else
+    write-host 'Thank you!'
+}
+else{
+    #perform fallback shit
+    write-host 'comparison operators are -eq -ne -gt -lt etc'
+}
+
+switch($VAR){
+    1{#do this}
+    2{#do that}
+    default{#do nothing}
+    }
+
+for($i=0; $i -le 10; $i++){write-host $i -foregroundcolor $i}
+
+$VAR = get-childitem 'C:\' -Recurse
+foreach($file in $VAR){write-host $file}
+
+while(condition)(#do something and change the condition)
+do{#action}while(condition)
+
+>> I/O
+$jsonData = invoke-webrequest -uri "something.json"
+$rawData = $jsonData.Content
+$objData = $rawData | convertFrom-Json
+
+$txtContent = get-content "C:\sample.log"
+$betterFormat = $txtContent | convertFrom-csv
+
+write-host 'string or converted to string' -ForegroundColor Yellow -Backgroundcolor Blue
+write-output 'this is the dafault for any variable, so we rarely have to actually type it'
+write-verbose
+
+'string' | out-file 'C:\test.txt'
+get-process | convertTo-Csv -NoTypeInformation | out-file 'C:\test2.csv'
+
+>> Exception handling (TechThougts Powershell Video 8. Flaking from here on out)
+errors are non terminating - powershell doesn't crash when errors happen, it throws shit into error pipeline, and just moves on to the next line. -ErrorAction Stop to stop commandlets, or use try-catch blocks. Thrown error objects can be analysed and passed around
+
+get-item -Path <invalid item> -ErrorAction Stop # will pause after the error
+
+>> winRM
