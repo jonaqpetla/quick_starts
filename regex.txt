@@ -1,0 +1,73 @@
+Regular Expressions are widely supported across mulltiple platforms/languages
+
+Easiest way to practice for us is to use Regex enabled search in VS Code.
+Other supported places: JS, Python (import re), C++ <regex>, C#, Bash(grep, vi)
+
+>> Characters ====================================================================================================
+. Any character except newline
+\s space, tab, newline
+\S not space
+\d digit
+\D not digit
+\w word character (a-z, A-Z, 0-9, _)
+\W not word character
+[A-Z] or [1-5] or [.*] or [ab] or [a-zA-z]to specify one character from this set, doesn't require escaping
+[^a-z] to match characters Not in brackets
+
+>> Locations =====================================================================================================
+\b word boundary
+\B not boundary
+^ beginning of a string or line
+$ end of a string or line
+\A start of string
+\Z end of string
+\< start of word
+\> end of word
+
+>> Requires escaping  . [ { ( ) \ ^ $ | ? * + ====================================================================
+
+>> Logic, groups =================================================================================================
+| or
+M(r|s|rs). to match Mr. or Ms. or Mrs.
+
+https?://(www\.)?\w+\.\w+ to capture urls (http://www.google.com, https://cnn.org)
+$0 to select the whole selection, $1 to select www, $2 to select the website name, $3 to select domain
+use case: find & replace (use $2$3 to clean up the urls)
+
+>> Quantifiers ===================================================================================================
+\d{3} to match 3 contiguous digits
+\d* to match zero or more digits, + to match 1 or more
+\.? or \d? to match 0 or 1 . or digiti
+\d{3,7} to match 3 to 7 digits
+\d{3,} to match 3 or more digits
+
+>> Python implementation =========================================================================================
+
+import re
+# use raw strings - don't want python to interpret our regex specifications
+
+stringVariable = 'String with the Pattern we\'re searching for embedded within it.'
+pattern = re.compile(r'\bPattern we\'re searching for\b')
+matches = pattern.finditer(stringVariable)
+for match in matches:   # match objects with span and match itself
+    print(match)
+    print(match.span())
+    print(match.string)
+    # print(match.group(1)) # in case we have groups in the regex
+
+# group extraction example
+stringVariable = '''
+https://www.google.com
+http://wikipedia.org
+https://www.cnn.org 
+'''
+pattern = re.compile(r'https?://(www.)?(\w+)(\.\w+)')
+matches = pattern.finditer(stringVariable)
+for match in matches:
+        print(match.group(2), match.group(3))
+        subbedString = pattern.sub(r'\2\3', stringVariable)
+        print(subbedString)
+
+# pattern.findall() method returns only the matched strings or the groups. limited use case
+# pattern.search(stringVariable) returns the first match
+# re.compile(r'pattern', re.IGNORECASE)
