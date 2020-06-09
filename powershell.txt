@@ -8,24 +8,24 @@ vsCode has extensions for powershell development
 # for comment. <# for multiline comments #>
 save the script and run using ./<scriptname>.ps1, might have to Set-ExecutionPolicy before that
 
->> Basic Navigation:
+>> Basic Navigation ==============================================================================================
 get-location (or gl) works like pwd
 set-location <path> (or sl <path>) works like cd, cd also works, as well as relative pathing
 move-item <item name> <directory> (or mi <> <>) to move
 new-item <item name> (or ni)
 remove-item <item name> (or ri
 
->> Finding help
+>> Finding help ==================================================================================================
 get-command <name> to list all commands available. e.g. get-command * to list the universe
 get-help <command> to get help (run update-help before running it the first time)
 some commands even have a get-help <command> -example option
 
->> Pipe
+>> Pipe ==========================================================================================================
 pipe a returned object to get-member to look at the inaards and tyname, e.g. get-date | get-member
 pipe to format-list to get a list of all properties of the passed object
 get-process -Name chrome | stop-process to stop all processes with chrome in name
 
->> Variables (powershell is not strongly typed)
+>> Variables (powershell is not strongly typed) ==================================================================
 $PSitem (or simply $_) is the curent working object, get-variable to list all active variables
 e.g. 1,2,3 | foreach-object {$_} will  return 1 \n 2 \n 3
 e.g. get-process | where-object {$_.CPU -gt 100} to echo the processes with cpu property valued greater than 100
@@ -35,7 +35,7 @@ e.g. "" allows you to escape string definition and do math inside. $DEMO = "two 
 e.g. $VAR = read-host -Prompt 'Enter the directory to list: '
         ls $VAR (read-host example use case)
 
->> Logic
+>> Logic =========================================================================================================
 
 $VAR = read-host -Prompt 'Enter 2'
 if($VAR -eq 2){
@@ -65,7 +65,7 @@ foreach($file in $VAR){write-host $file}
 while(condition)(#do something and change the condition)
 do{#action}while(condition)
 
->> I/O
+>> I/O ===========================================================================================================
 $jsonData = invoke-webrequest -uri "something.json"
 $rawData = $jsonData.Content
 $objData = $rawData | convertFrom-Json
@@ -80,9 +80,36 @@ write-verbose
 'string' | out-file 'C:\test.txt'
 get-process | convertTo-Csv -NoTypeInformation | out-file 'C:\test2.csv'
 
->> Exception handling (TechThougts Powershell Video 8. Flaking from here on out)
+>> Exception handling (TechThougts Powershell Video 8. Flaking from here on out) =================================
 errors are non terminating - powershell doesn't crash when errors happen, it throws shit into error pipeline, and just moves on to the next line. -ErrorAction Stop to stop commandlets, or use try-catch blocks. Thrown error objects can be analysed and passed around
 
 get-item -Path <invalid item> -ErrorAction Stop # will pause after the error
 
+>> Regex =========================================================================================================
+We rarely need to use these, because we're using rich objects in most cases and don't really need to parse shit, but
+"String" -Match 'Regex' to match
+$Matches[number].Length .Values etc to access more info.
+
 >> winRM
+
+>> Basic system administration ===================================================================================
+
+Get-NetIPConfiguration is replacement for 'ipconfig /all'. -Detailed for even more info
+Get-NetAdapter to check current active connections/mac addresses. Get-NetAdapterStatistics for up/down packet stats
+ipv4 configuration for a particular adapter (that familiar dialog box):
+New-NetIPAddress -InterfaceAlias "Wifi" -IPAddress 172.16.0.20 -PrefixLength 24 -DefaultGateway 172.16.0.1
+Set-DNSClientServerAddress -InterfaceAlias "Wifi" -ServerAddresses 172.16.0.10
+
+Set-NetFirewallProfile -profile domain,public,private -enabled false : to turn off firewall if needed
+New-NetFirewallRule -DisplayName "Allow Inbound Port 80" -Direction Inbound -Localport 80 -Protocol TCP -Action Allow (Inbound/outbound, allow, block etc)
+
+Ping and tracert: Test-NetConnection alone to ping microsoft's server, Test-NetConnection google.com to ping normally, Test-NetConnection google.com -Traceroute to trace route, Test-NetConnection google.com -Port 25 to see if the port is open
+
+Restart-Service to restart something
+Get-Service | Out-GridView to view all running/stopped services
+Stop-Service, Start-Service, Set-Service (change properties)
+
+Rename-Computer P4nDA
+Restart-Computer, Shutdown-Computer
+
+get-hotfix | out-gridview to check all of your installed windows updates
