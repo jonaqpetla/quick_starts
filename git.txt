@@ -45,6 +45,7 @@ Undoing changes:
 >> git reset --hard <commit hash> or git commit --hard origin/master
 reverts code back to the specified version. This is to be treated as dangerous, because it deletes the commits newer than what you're checking out. Can still use git reflog to recover the deleted commits for 30 days or so. It is recommended that we use a backup branch before resetting the current branch.
 >> the flags: --soft --mixed --hard: from reset the most recent commit is erased, and we get the commit whose SHA we provided. --mixed (default) means our last commit will now be in working directory, --soft means they will be in staging area. --hard means our most recent commit has been deleted and the <commit hash> is the only commit we have.
+>> git reset right after staging something and no flags specified - will unstage the thing
 
 >> git commit --amend
 make changes to the last commit - include files, change commit message. Treat as a fresh  commit, but with the same name/SHA as the most recent one.
@@ -85,7 +86,7 @@ line 3                          <- old lines
 line 4                          <- remote changes
 >>>>>>>>> 019248WEIRDNUMBER     <- unique identifier
 line 5 ...
-manually resolve and commit again. The merge was made, but the lines were modified to mark them as conflicted. No commit was made. The same file might have multiple mergeconflicts.
+manually resolve and commit using 'git merge --continue'. The merge was made, but the lines were modified to mark them as conflicted. No commit was made till you've told git that you have manually resolved it. The same file might have multiple mergeconflicts.
 
 Pull Requests:
 Are what made github so popular. Basically it is a way to merge my branch into your master. It can be treated as a merge request from one branch to the original owner of the repository. Github contributions work in this way - you fork the original source into your account, add the original repo as another remote in order to keep track of the progress, work on your copy to add feature/remove bug, pull once more from the original remote to see if there is coflicting progress, then submit a pull request so that the owner can pull your contributions in. You will be listed as a contributor to the original repo after the owner pulls in your changes. Check the Contributing.md file to find any guidelines the owners have set.
@@ -94,7 +95,24 @@ Starting in your own system:
 >> git init or git init <repo_name>
 Initialises a/the repo in your working directory
 
-Udacity Class Notes:
+>> git bisect to binary search through your commit history to find out where the unit test started failing
+
+manual test workflow:
+git bisect start            to start the process
+git bisect good <hash>      to say that this commit is good
+git bisect bad <hash>       to say that this one is bad. Search will happen between these two points
+git bisect bad <left empty to say the current head is bad>
+                            as soon as good and bad commits are specified, git bisect will checkout a commit at the midpoint, say whether it is good or bad using:
+git bisect good or git bisect bad
+                            once this process has nailed down the commit where the error started happening, it will tell us: commit hash, author, date, changes. 
+git bisect log > savefile   might be useful later
+git bisect reset            to checkout cuurent branch again and act as if git bisect never ran
+
+automatic ./test testing workflow
+./test should return 0 iff the commit is good.
+git bisect start, then good, then bad, then git bisect run. Enjoy.
+
+>> Udacity Class Notes ===========================================================================================
 1. version control is like a snapshot of that board game
 git, mercurial, subversion are competitors
 git is distributed version control system: everyone has a full copy of the project
@@ -106,6 +124,12 @@ working directory -> staging area -> repository
 
 2. .git contents: config, description, hooks (scripts to hook into git's different lifecycle events), info, objects (stores the commits), refs (pointers to commits)
 
-3. git log uses less as the pager
+3. Relative commit references: HEAD^ is the parent commit, HEAD^^ is the grandparent etc. Use HEAD^2 to get to the other parent (similarly for grandparents) if this is the result of a merge and we have multiple parents. HEAD~2 is HEAD^^
 
-4. Relative commit references: HEAD^ is the parent commit, HEAD^^ is the grandparent etc. Use HEAD^2 to get to the other parent (similarly for grandparents) if this is the result of a merge and we have multiple parents. HEAD~2 is HEAD^^
+>> Missing Semester Class Notes ==================================================================================
+1. Underlying Data model: Tracks snapshots of the top level directories using Directed Acyclic Graph. The folders are called trees and files called blobs inside git terminology. Git tracks the changes made from commit to commit.
+blobs = & array(bytes)
+trees = & map(streing, tree or blob)
+commit = & struct{parents(array of commits), author, message, snapshot(tree)} 
+^ everything is pointer to objects, where objects are refered to by their sha1 hashes
+
