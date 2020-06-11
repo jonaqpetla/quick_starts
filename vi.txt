@@ -16,6 +16,7 @@ to open two files in tabbed mode. use :tabn to go to the next tab.
 >> /word_you_are_looking_for, n to  find the next match. in command mode. N for previous match
 >> :%s/what_to_replace/replace_with
 >> * to search for the word currently under cursor
+>> regex is fully supported
 
 >> v to start selecting.
 >> y (yank) to copy the selected text, d(delete) to cut the selected text
@@ -41,6 +42,8 @@ Advanced usage:
 
 >> vi -p <file_1> <file_2> mentioned before, for tabs
 >> :split <filename> to horizontal split, :vsplit filename for vertical. ctrl-w-w to move cursor to  adjacent window. Opening the same file in a split is allowed.
+>> :vertical resize -10 to make the right pane smaller etc.
+>> vim has a few built in file explorers. :Explore to open a full screen file explorer, :Lex to open a file explorer on left tab. Tab switching/resizing rules same as :vsplit.
 >> :fold. mark a block using V, then :fold to mark them as foldable. :zo to ope that fold, :zc to close the fold
 >> ctrl+n for autocomplete of a word. Good for long variable names etc. ctrl+p to show a list of possible options
 >> ctrl+u/ctrl+d to move the cursor up/down by half a screen.
