@@ -115,3 +115,4 @@ Rename-Computer P4nDA
 Restart-Computer, Shutdown-Computer
 
 get-hotfix | out-gridview to check all of your installed windows updates
+get-eventlog system | out-gridview to see the system log

@@ -150,6 +150,16 @@ echo "This file was created by the shell script quick_starts/shell.txt" >> "/mnt
 
 # TMUX ===========================================================================================================
 # sessions have windows have panes
+# ctrl + b + control stuff. ctrl + b, lift finger, tap the key - just like gdb tui stuff.
+# ctrl + b + % to split vertically, ctrl + b + " to split vertically.
+# ctrl + b + arrow key to switch among panes
+# ctrl + b + c to open a new window. ctrl + b + <window number> to switch
+# ctrl + b + , <name of window> to rename a window
+# ctrl + b + d to detach from the curretn session. tmux keeps running, ignoring SIGHUP. you can return later.
+# tmux ls (in bash) to see tmux sessions running
+# tmux attach -t sessionName to reattach into a tmux session
+# tmux rename-session -t 0 newName to rename a session.
+# tmux kill-session -t sessionName to kill a session
 
 # SSH ============================================================================================================
 # ssh userName@host e.g. ssh eey177528@hpc.iitd.ac.in or ssh p4nda@192.168.1.1
