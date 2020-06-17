@@ -107,6 +107,9 @@ echo "This file was created by the shell script quick_starts/shell.txt" >> "/mnt
 # rmdir only removes empty directories
 # cat <filename> to just list the text file. cat >> <filename> to append info into files. cat > to overwrite. also, cat file1 file2 concatenates file1 to file2
 # more to page through. less to read through, easier. q to quit from both.
+# alias gl="git log --oneline --decorated --graph". now typing gl will mean this. alias gl to check what gl means. edit ~/.bashrc and include this line if you don't want to set aliases every time.
+
+# the prompt can be edited. PS1=">> " to sub p4nda@WindowsPC:/mnt/d/temp into just >> . edit ~/.bashrc if you want it permanently. PS means Prompt Stream, environment variable. PS1="\w>> " to mention the working directory.
 
 # piping command example (redirection): history | less
 # executable < file to rewire the input of the program to this file
@@ -121,9 +124,6 @@ echo "This file was created by the shell script quick_starts/shell.txt" >> "/mnt
 # chmod to change mode. eg, chmode +X <filename> to make the file executable. or use chmod 700 <filename> to give me all permissions and nobody else gets anything. 
 # Directories need the execute bit set in order to be seen by others (searchable), read to run ls -a, write to be able to rename, create or remove files from a directory. e.g. if you have w on a file inside a directory but not w on the directory, you can edit the file but can't delete it.
 
-# ctrl + c to stop a command.
-# killall <application> to kill all processes for the app
-# ctrl + D to say, I'm done with all input, and close the terminal. 
 # mail from shell (needs some config, uses mailutils package), links browser
 # Aptitude is the default package manager. apt-cache search program (or *programName*) to see what is available in apt. apt-cache policy <app name> to see if your istalled version is the latest version. Install a .deb file by using sudo dpkg -i <filename>
 # grep to find text in all files in current directory. -i to ignore case, -n to include line numbers as well. grep -flags "string" ./*
@@ -138,3 +138,47 @@ echo "This file was created by the shell script quick_starts/shell.txt" >> "/mnt
 # Boolean: ! -o -a
 # String: = != -z -n str
 # File test: -d -e -f -p -t -u -r -w -x -s 
+
+# Job Control ====================================================================================================
+# ctrl + c to stop a command (Unix SIGINT command is sent into the program. The program can catch an ignore it if it wants, then we'll have to send SIGQUIT to quit the program. Man Signal for more info). ctrl + \ = SIGQUIT
+# killall <application> to kill all processes for the app
+# ctrl + D to say, I'm done with all input, and close the terminal.
+# run something in the background by adding & e.g. ./a.out &
+# jobs to see what jobs are running. Refered to the programs later by their id, e.g. Kill %2
+# kill to kill a job, bg to continue in background, kill -STOP to stop executing temporarily. fg to foreground again
+# nohup ./a to keep the program running on Hangup signal (terminal is closed, or kill -HUP %1)
+
+# TMUX ===========================================================================================================
+# sessions have windows have panes
+
+# SSH ============================================================================================================
+# ssh userName@host e.g. ssh eey177528@hpc.iitd.ac.in or ssh p4nda@192.168.1.1
+# ssh-keygen to generate keys. public key default at ~/.ssh/id_rsa.pub (user/.ssh for windows)
+# cat the public key into .ssh/authorized_keys to login using key into remote server. ssh-copy-id user@host achieves the same result.
+# scp to copy files to/from remote server. scp localFile user@host:remoteFile
+# scp for directories - scp -r YourDirectory eey177528@hpc.iitd.ac.in:$HOME, or scp -r eey177528@hpc.iitd.ac.in:$HOME YourDirectory
+# edit ~/.ssh/config to make the login process easier
+
+# FFMPEG =========================================================================================================
+# ffmpeg is a powerful audio/video/image converter application
+# usage is simple and straightforward, so it doesn't warrant a dedicated file
+# Basic usage:
+# ffmpeg -i <input filename> <output filename>
+# ffmpeg -i <input filename> -q 25 <output.avi> or -crf 25 <output.mp4> to specify quality of output. high value means low quality. 20-30 values are generally circuated in the web.
+# ffmpeg -i <input filename> -b:v 1000k -b:a 96k <output filename> to specify exact video and audio bitrates
+# Filters:
+# Audio volume (multiplier): ffmpef -i <input> -filter:a "volume=1.2" <output> to 1.2x the volume
+# Audio channel mapping (0 is left, 1 is right): ffmpeg <in> -filter:a "channelmap=0-0|0-1" <out> (mono to stereo)
+# Video crop: -filter:v "crop=w=640:h=480:x=100:y=200"
+# Video scale: -filter:v "scale=w=640:h=480" or "scale=w=2/3*in_w:h=2/3*in_h" or "scale=w=852:h=-1" (h is auto)
+# Other video/picture filters: Sharpen, Contrast, Brightness, Saturation, gamma (for r/g/b/all), colourbalance
+
+# Data Wrangling ================================================================================
+# sed       : a stream editor, good for regex match then replace
+# awk       : column oriented stream editor, also a full programming language
+# sort      : sort lines by something
+# uniq      : remove duplicate lines, optionally count the number of dubplicate lines, works on sorted data
+# bc        : berkley calculator - calculates and expression piped into it, e.g. echo '1+1' | bc -l prints 2
+# R         : a programming language for statisticians, good for summarising stats
+# gnuplot   : plot the data
+# xargs     : turns the stream into the arguments for the command following it e.g. something | xargs apt remove 

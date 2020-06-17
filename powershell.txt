@@ -14,6 +14,8 @@ set-location <path> (or sl <path>) works like cd, cd also works, as well as rela
 move-item <item name> <directory> (or mi <> <>) to move
 new-item <item name> (or ni)
 remove-item <item name> (or ri
+get-childitem or gci (ls is an alias of this) to see contents of a file. gci -Recurse to expand subdirectories as well, recursively.
+tree to check directory structure. tree /F to also show files.
 
 >> Finding help ==================================================================================================
 get-command <name> to list all commands available. e.g. get-command * to list the universe
