@@ -39,6 +39,7 @@ Advanced usage:
 >> :set smartindednt or autoindednt to copy indentation from last line, smart indent indents after braces as well.
 >> to make these settings permanent, we need to edit .vimrc file (which may not exist if we haven't edited anything). 
 ~/.vimrc (for current user) or ~/etc/vimrc(for all users). vim --version lists all of the locations. Editing the global vimrc will require sudo privileges
+>> mx in normal mode to mark a spot as 'x'. jump to that exact spot by typing ` + x, or that line by ' + x.
 
 >> vi -p <file_1> <file_2> mentioned before, for tabs
 >> :split <filename> to horizontal split, :vsplit filename for vertical. ctrl-w-w to move cursor to  adjacent window. Opening the same file in a split is allowed.
