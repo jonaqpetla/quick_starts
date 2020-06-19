@@ -108,6 +108,7 @@ echo "This file was created by the shell script quick_starts/shell.txt" >> "/mnt
 # cat <filename> to just list the text file. cat >> <filename> to append info into files. cat > to overwrite. also, cat file1 file2 concatenates file1 to file2
 # more to page through. less to read through, easier. q to quit from both.
 # alias gl="git log --oneline --decorated --graph". now typing gl will mean this. alias gl to check what gl means. edit ~/.bashrc and include this line if you don't want to set aliases every time.
+# watch <command> to run it every 2 seconds or so. e.g. watch ls -l -a on a tmux pane while working to see as the files change.
 
 # the prompt can be edited. PS1=">> " to sub p4nda@WindowsPC:/mnt/d/temp into just >> . edit ~/.bashrc if you want it permanently. PS means Prompt Stream, environment variable. PS1="\w>> " to mention the working directory.
 
@@ -125,6 +126,7 @@ echo "This file was created by the shell script quick_starts/shell.txt" >> "/mnt
 # Directories need the execute bit set in order to be seen by others (searchable), read to run ls -a, write to be able to rename, create or remove files from a directory. e.g. if you have w on a file inside a directory but not w on the directory, you can edit the file but can't delete it.
 
 # mail from shell (needs some config, uses mailutils package), links browser
+# curl to scrape websites
 # Aptitude is the default package manager. apt-cache search program (or *programName*) to see what is available in apt. apt-cache policy <app name> to see if your istalled version is the latest version. Install a .deb file by using sudo dpkg -i <filename>
 # grep to find text in all files in current directory. -i to ignore case, -n to include line numbers as well. grep -flags "string" ./*
 # crontabs to schedule task, eg. upgrade your softwares every Sunday at 5 am etc.
@@ -168,6 +170,24 @@ echo "This file was created by the shell script quick_starts/shell.txt" >> "/mnt
 # scp to copy files to/from remote server. scp localFile user@host:remoteFile
 # scp for directories - scp -r YourDirectory eey177528@hpc.iitd.ac.in:$HOME, or scp -r eey177528@hpc.iitd.ac.in:$HOME YourDirectory
 # edit ~/.ssh/config to make the login process easier
+
+# Encryption =====================================================================================================
+# printf "Example" | sha1sum to generate sha1 hashes. Why not echo? echo "hello" outputs "hello\n", printf doesn't include the \n. For files we can just use sha1sum <filename>
+
+# Symmetric Key Cryptography:
+# openssl aes-256-cbc -salt -in file.cpp -out enc.cpp to encrypt
+# openssl aes-256-cbc -d -salt -in enc.cpp -out rec.cpp to decrypt
+# add -pbkdf2 flag to use kdf of passphrase as the key. 
+
+# Asymmetric Key Cryptography: private-public keys, digital signing
+# rsa keys from ssh-keygen section, gpg from git.txt
+# usually not used alone, usually used for bootstapping the real stuff:
+
+# Message ____________________________________
+#                                             \
+# Symmetric Keygen ---------- Key ---> Symmetric Encryption ----> Cipher Text (sent)
+#                               \
+# Receivers Public Key --- Asymmetric Encryption ---------------> Encrypted Key (sent)
 
 # FFMPEG =========================================================================================================
 # ffmpeg is a powerful audio/video/image converter application
