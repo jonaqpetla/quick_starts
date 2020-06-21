@@ -1,6 +1,6 @@
 Here are some of the basic commands and instructions for git
 
->> git config to set username, email etc
+>> git config to set username, email etc. it edits the ./.git/config text file to include/edit stuff.
 
 >> git clone <url> or git clone <url> new_name
 creates a copy of the repo, rename if you want
@@ -17,8 +17,8 @@ asks whether you want to stage individual edits. Parts of files can be staged th
 removes a file or folder from staging area
 >> git commit or git commit -m "commit message"
 make a commit duh
->> git diff
-shows all the changes made that has yet not been committed
+>> git diff or git diff --staged
+shows all the changes made that has yet not been committed, or just the staged differences
 >> git commit -am "message"
 adds and then commits in one go
 >> git status
@@ -32,10 +32,11 @@ receives recent changes from remote repo
 
 >> git log
 shows a log of all commits and messages
-git log --oneline to display in one line instead of 5, only initial characters of the sha and the commit message.
-git log --stat to display file insertions/deletions stat for the commits
-git log --patch or -p to display actual insertions/deletions in the files
-git log --decorate to display some additional info, e.g. tags
+git log --oneline       condensed summary, only initial characters of the sha and the commit message.
+git log --stat          to display file insertions/deletions stat for the commits
+git log --patch or -p   to display actual insertions/deletions in the files
+git log --decorate      to display some additional info, e.g. tags, branch names
+git log -n 10           to display only the last 10 commits
 >> git show <SHA>
 show log of given commit. the most recent commit in case no argument is given
 >> git blame <filename>
@@ -45,7 +46,7 @@ Undoing changes:
 >> git reset --hard <commit hash> or git commit --hard origin/master
 reverts code back to the specified version. This is to be treated as dangerous, because it deletes the commits newer than what you're checking out. Can still use git reflog to recover the deleted commits for 30 days or so. It is recommended that we use a backup branch before resetting the current branch.
 >> the flags: --soft --mixed --hard: from reset the most recent commit is erased, and we get the commit whose SHA we provided. --mixed (default) means our last commit will now be in working directory, --soft means they will be in staging area. --hard means our most recent commit has been deleted and the <commit hash> is the only commit we have.
->> git reset right after staging something and no flags specified - will unstage the thing
+>> git reset right after staging something and no flags specified - will unstage the thing. git reset -p to unstage individual changes.
 
 >> git commit --amend
 make changes to the last commit - include files, change commit message. Treat as a fresh  commit, but with the same name/SHA as the most recent one.
@@ -54,10 +55,22 @@ reverts the changes made in the given commit, and makes a new commit.
 
 >> edit ./.git/.gitignore text file to list the files you don't want tracked. wildcards are allowed: can ignore whole folders this way.
 # marks the line a comment
-* is 0 or more character wildcard, ? is one character wildcard
+* is 0 or more character wildcard, ? is one character wildcard. example gitignore file- vi .gitignore (outside .git)
+*.cpp
+local.*
+folder/
+*.log
+
 >> git tag -a <tag> 
 to tag the most recent commit, e.g. v1.0.1 etc. git tag -d <tag> to remove the tag.
 git tag -a <tag> <commit SHA> to tag older commits. Tag additions ask for a message in the editor.
+
+Signing your work using asymmetric key cryptography
+>> gpg --list-keys to check what keys you have already
+>> gpg --gen-key to generate public-private pairs
+>> git config user.signingkey <public key>
+>> git tag -s 'tag name' or git commit -S ... to sign your tag/commit
+>> anyone who has your public key on their keychain can verify you. Use if your entire group agrees to.
 
 Branching:
 >> git branch
@@ -86,7 +99,9 @@ line 3                          <- old lines
 line 4                          <- remote changes
 >>>>>>>>> 019248WEIRDNUMBER     <- unique identifier
 line 5 ...
-manually resolve and commit using 'git merge --continue'. The merge was made, but the lines were modified to mark them as conflicted. No commit was made till you've told git that you have manually resolved it. The same file might have multiple mergeconflicts.
+Manually resolve and commit using 'git merge --continue'. The merge was made, but the lines were modified to mark them as conflicted. No commit was made till you've told git that you have manually resolved it. The same file might have multiple mergeconflicts. Or you can just abandon the endeavour by running 'git merge --abort'. Be careful, a single file can have multiple conflicts, so page through the whole file. Search for '====' for an easier time inside a large file.
+
+>> git rebase is a powerful tool. to be researched later. also 'git rebase -i' for interactive - edit your history.
 
 Pull Requests:
 Are what made github so popular. Basically it is a way to merge my branch into your master. It can be treated as a merge request from one branch to the original owner of the repository. Github contributions work in this way - you fork the original source into your account, add the original repo as another remote in order to keep track of the progress, work on your copy to add feature/remove bug, pull once more from the original remote to see if there is coflicting progress, then submit a pull request so that the owner can pull your contributions in. You will be listed as a contributor to the original repo after the owner pulls in your changes. Check the Contributing.md file to find any guidelines the owners have set.
@@ -107,6 +122,7 @@ git bisect good or git bisect bad
                             once this process has nailed down the commit where the error started happening, it will tell us: commit hash, author, date, changes. 
 git bisect log > savefile   might be useful later
 git bisect reset            to checkout cuurent branch again and act as if git bisect never ran
+git bisect visualise        to get a visual representation of where we are at any stage
 
 automatic ./test testing workflow
 ./test should return 0 iff the commit is good.
@@ -122,7 +138,7 @@ commit is the fundamental unit of git
 checkout is when content of a commit has been copied to working directory
 working directory -> staging area -> repository
 
-2. .git contents: config, description, hooks (scripts to hook into git's different lifecycle events), info, objects (stores the commits), refs (pointers to commits)
+2. .git contents: config, description, hooks (scripts to hook into git's different lifecycle events), info, objects (stores the commits, changes, everything), refs (pointers to commits, every branch is stored here)
 
 3. Relative commit references: HEAD^ is the parent commit, HEAD^^ is the grandparent etc. Use HEAD^2 to get to the other parent (similarly for grandparents) if this is the result of a merge and we have multiple parents. HEAD~2 is HEAD^^
 
