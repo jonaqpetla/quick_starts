@@ -101,6 +101,7 @@ Get-NetAdapter to check current active connections/mac addresses. Get-NetAdapter
 ipv4 configuration for a particular adapter (that familiar dialog box):
 New-NetIPAddress -InterfaceAlias "Wifi" -IPAddress 172.16.0.20 -PrefixLength 24 -DefaultGateway 172.16.0.1
 Set-DNSClientServerAddress -InterfaceAlias "Wifi" -ServerAddresses 172.16.0.10
+Get-NetTCPConnection to see all open TCP ports
 
 Set-NetFirewallProfile -profile domain,public,private -enabled false : to turn off firewall if needed
 New-NetFirewallRule -DisplayName "Allow Inbound Port 80" -Direction Inbound -Localport 80 -Protocol TCP -Action Allow (Inbound/outbound, allow, block etc)
