@@ -1,3 +1,5 @@
+printf and logs are cumbersome for debugging. behold - gdb.
+
 gdb works on executables, that's  our .out files.
 in case of g++, compile using the -g flag.
 e.g. g++ -g hello.cpp or g++ -g hello.cpp -o executable
@@ -47,6 +49,31 @@ prints all of the breakpoints
 >> backtrace traces the current funtion call to main()
 shortened bt
 
+Advanced =========================================================================================================
+>> disassemble functionName to show disassembly
+>> text user interface: ctrl + x + a. The drawing gets wonky sometimes, ctrl + l to redraw the pane. ctrl x a again to exit out out TUI. ctrl + x + 2 to show a disassembly pane, again to show registers. do ctrl + x, lift finger, tap 2 (not exactly ctrl '+' x + 2.. but what did you expect other than weird quirks)
+>> gdb has a pretty complete python interpreter built in - in case you want to print fancy stuff
+>> info registers or info frame to check stack frame info
+>> x/10x $sp to show 10 memory locations after stack pointer. x stands for examine.
+
 you can run make from inside gdb. you hot fix a code using value assignments,
 go fix your code in another editor/terminal, run make again and run and check :P
+python -m ipdb script.py to use iPython Debugger, that works the same as gdb but for .py
 
+==================================================================================================================
+>> Profiling your application's resources:
+
+printf to check timings acrosss the sections
+real time, user time, cpu time. time ./a.out
+
+tracing profilers (higher overhead), sampling profilers
+tracing profiler: python -m cProfile -s tottime scipt.py
+line prfiler: kernprof -l -v script.py (ignores built in functions/library calls, tells percentage of time spent on lines)
+
+python -m memory_profiler script.py
+
+perf
+lsof to see which program is accessing which file
+hyperfine to benchmark two processes against each other
+
+htop to get a live view of system resources, like taskmanager
