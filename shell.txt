@@ -167,9 +167,15 @@ echo "This file was created by the shell script quick_starts/shell.txt" >> "/mnt
 # ssh userName@host e.g. ssh eey177528@hpc.iitd.ac.in or ssh p4nda@192.168.1.1
 # ssh-keygen to generate keys. public key default at ~/.ssh/id_rsa.pub (user/.ssh for windows)
 # cat the public key into .ssh/authorized_keys to login using key into remote server. ssh-copy-id user@host achieves the same result.
+# if you save your keys in different files, add them to the checking list by ssh-add <file without .pub>
 # scp to copy files to/from remote server. scp localFile user@host:remoteFile
 # scp for directories - scp -r YourDirectory eey177528@hpc.iitd.ac.in:$HOME, or scp -r eey177528@hpc.iitd.ac.in:$HOME YourDirectory
 # edit ~/.ssh/config to make the login process easier
+
+# to setup your own machine to accept ssh connections, apt install openssh-server. sudo service ssh status to check whether ssh server is running. edit /etc/ssh/sshd_config to change default port (default is 22 - every hacker tries to connect to this port). The 'd' in sshd stands for daemon.
+# never allow anyone to login as root. adduser, then usermod to give that id sudo privileges, and setup rsa keys in that id's home folder. Disable root's login ability by editing sshd_config file (and restard sshd service).
+# (run sshd service on windows to get ssh server on windows)
+# wsl cannot run sshd on the same port as the windows service. change port to 2200 or something, and you'll be fine. run ssh user@host -p 2200 (to specify port). Might have to run ssh-keygen -A to add hostnames, or restart using /etc/init.d/ssh start, or service ssh restart. Can verifiy if sshd is running by using htop
 
 # Encryption =====================================================================================================
 # printf "Example" | sha1sum to generate sha1 hashes. Why not echo? echo "hello" outputs "hello\n", printf doesn't include the \n. For files we can just use sha1sum <filename>
