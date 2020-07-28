@@ -1,0 +1,40 @@
+# Title
+## Subtitle
+###### This goes on
+
+*Italics* and _Italics_
+**Bold** and __Bold__
+***Bold and Italic***
+~~Strikethrough~~
+
+`Inline code`
+```javascript
+int code
+string multiple = "lines"
+```
+Specifying language (for syntax highlighting) is optional. javascript or js, html, ruby, python, c, bash
+
+[Link](http://www.url.com "Text shown when hovering")
+
+![Image Caption](https://link.jpg)
+![Image Caption](/home/absolute_path_works.jpg)
+
+| Table | Heading | Another |
+| --- | --- | --- |
+| sample | 20 | 24 |
+
+> Quoted line
+>> Nested quote
+Beautiful, isn't it?
+
+1. List entry one
+2. List entry two
+1. Numbered List works this way
+- Bullet points
+    - Tabs are respected
+
+---
+Separator lines
+***
+
+Escape characters if necessary. e.g. \# This is not a title
