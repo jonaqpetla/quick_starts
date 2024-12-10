@@ -4,7 +4,13 @@ gdb works on executables, that's  our .out files.
 in case of g++, compile using the -g flag.
 e.g. g++ -g hello.cpp or g++ -g hello.cpp -o executable
 
-fire up gdb using gdb ./a.out or ./executable
+fire up gdb using gdb ./a.out or gdb ./executable
+
+>> layout next
+shortened lay next
+layout like a typical debugger. Press enter a few times to get the disassembly also displayed. In split views, can swap between views. To get to a preferred view directly, can also use: "layout src" or "layout asm" or "layout reg" etc.
+>> ref 
+refreshes the layout to clean up the view.
 
 >> break <function_name> or break <file_name>:<line_number>
 shortened b
@@ -23,8 +29,13 @@ disables all breakpoints
 
 >> run to start running
 
+>> start to place a temporary breakpoint at main, and run till there
+
 >> next or n
 runs the next line: step over
+
+>> nexti
+next "instruction" - runs the next instruction in assembly. Each line of c will correspond to multiple lines of assembly.
 
 >> step or s
 step in
@@ -34,13 +45,22 @@ shortened p
 prints the specified variable, or prints everything
 
 >> print <variable_name> = <assign_value>
-to hack in and assign a value to the variable mid execution
+to hack in and assign a value to the variable mid execution. "set" also does the same thing.
 
 >> info locals
 prints all of the local variables
 
 >> info b
 prints all of the breakpoints
+
+>> info registers
+prints all of the CPU registers
+
+>> watch <variable_name>
+Stops execution when the particular variable changes value
+
+>> whatis <variable_name>
+returns the variable type
 
 >> quit or q to quit gdb
 
@@ -51,14 +71,25 @@ shortened bt
 
 Advanced =========================================================================================================
 >> disassemble functionName to show disassembly
->> text user interface: ctrl + x + a. The drawing gets wonky sometimes, ctrl + l to redraw the pane. ctrl x a again to exit out out TUI. ctrl + x + 2 to show a disassembly pane, again to show registers. do ctrl + x, lift finger, tap 2 (not exactly ctrl '+' x + 2.. but what did you expect other than weird quirks)
+>> x/i $pc 
+examine the instruction at register $pc (program counter)
+>> text user interface: ctrl + x + a. The drawing gets wonky sometimes, ctrl + l to redraw the pane. ctrl x a again to exit out out TUI. ctrl + x + 2 to show a disassembly pane, again to show registers. do ctrl + x, lift finger, tap 2 (not exactly ctrl '+' x + 2.. but what did you expect other than weird quirks). This is same as "layout src"
 >> gdb has a pretty complete python interpreter built in - in case you want to print fancy stuff
 >> info registers or info frame to check stack frame info
 >> x/10x $sp to show 10 memory locations after stack pointer. x stands for examine.
 
+>> examinging core dumps
+1. locate the core dumps, usually at the location of the program itself. Change by doing, "cat /proc/sys/kernel/core_pattern". If it says, "./core", core will be dumped at the location of the executable as "core".
+2. gdb <program_name> <core_dump>
+The third parameter to gdb is the core dump file. gdb will tell a pretty verbose summary, where the function crashed, with what exception and at which line. Can also examine all registers/variables at that crashed state. Can also see the Instruction where the program crashed.
+
+>> record, reverse-step, reverse-stepi, reverse-next (rn), reverse-continue
+>> file ./a.out : reload a file without quitting gdb
+>> finish to finish the current function, and then stop
+
 you can run make from inside gdb. you hot fix a code using value assignments,
 go fix your code in another editor/terminal, run make again and run and check :P
-python -m ipdb script.py to use iPython Debugger, that works the same as gdb but for .py
+>> python -m ipdb script.py to use iPython Debugger, that works the same as gdb but for .py
 
 ==================================================================================================================
 >> Profiling your application's resources:
